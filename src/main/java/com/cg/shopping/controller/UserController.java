@@ -28,7 +28,7 @@ import com.cg.shopping.model.ProductDTO;
 import com.cg.shopping.model.UserDTO;
 import com.cg.shopping.service.UserService;
 
-@RestController
+@Controller
 public class UserController {
 
 	@Autowired
@@ -38,6 +38,7 @@ public class UserController {
 	 * This method provides API control for the new User to sign-up. //done
 	 */
 	@PostMapping(path = "/signup", consumes = "application/json")
+	@ResponseBody
 	public String userSignUp(@RequestBody UserDTO userdto)
 			throws NullValueFieldException, PasswordMismatchException, PasswordLengthMismatchException,
 			PasswordWithNoSplCharException, PasswordWithNoDigitException, EmailAlreadyExistException {
@@ -136,8 +137,7 @@ public class UserController {
 	}
 
 	/*
-	 * ======================================Updating===============================
-	 * =======
+	 * ======================================Updating============================
 	 */
 
 	/*
