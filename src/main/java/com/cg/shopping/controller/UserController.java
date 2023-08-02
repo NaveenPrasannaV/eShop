@@ -3,6 +3,7 @@ package com.cg.shopping.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,8 +25,10 @@ import com.cg.shopping.exception.PasswordWithNoSplCharException;
 import com.cg.shopping.exception.ProductNotAvailableException;
 import com.cg.shopping.exception.UserSignInRequiredException;
 import com.cg.shopping.model.OrdersDTO;
+import com.cg.shopping.model.PaymentStatusDTO;
 import com.cg.shopping.model.ProductDTO;
 import com.cg.shopping.model.UserDTO;
+import com.cg.shopping.service.PaymentMicroservice;
 import com.cg.shopping.service.UserService;
 
 @Controller
@@ -33,6 +36,9 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private PaymentMicroservice paymentMicroservice;
 
 	/*
 	 * This method provides API control for the new User to sign-up. //done
@@ -146,6 +152,12 @@ public class UserController {
 	@GetMapping(path = "/")
 	public String home() {
 		return "home";
+
+	}
+
+	@GetMapping(path = "/msapi")
+	public ResponseEntity<PaymentStatusDTO> DemoMicroservice() {
+		return paymentMicroservice.DemoMicroServicePaymentCall();
 
 	}
 
