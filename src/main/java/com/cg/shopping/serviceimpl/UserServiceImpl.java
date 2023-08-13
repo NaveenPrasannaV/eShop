@@ -358,22 +358,24 @@ public class UserServiceImpl implements UserService {
 		}
 		throw new UserSignInRequiredException("Please sign-in to Change the product Quantity in the cart");
 	}
-	
+
+	// ============================Updating===============================================
 	/*
-	 * UPDATING VIEW BILL()
+	 * This method will return the final bill, which includes total cart qty and
+	 * total cart price. Get cart product list, validating it and return by
+	 * converting it into DTO list from entities list.
 	 */
-	public String viewBillVersion2() throws UserSignInRequiredException {
+
+	public String viewBill_Version() throws UserSignInRequiredException {
 		String bill = null;
-		if (userSignInVerification()) 
-		{
+		if (userSignInVerification()) {
 			User user = userDao.getByEmailId(UserServiceImpl.userEmail);
 			Cart cart = cartDao.findCartByUserUserEmail(UserServiceImpl.userEmail);
 			String productBill = "";
 			List<ProductDTO> productList = ProductUtil
 					.convertToProductDTOList(cartDao.findCartByUserUserEmail(userEmail).getProductList());
 			productList = ShoppingValidation.cartListValidation(productList);
-			for (ProductDTO product : productList) 
-			{
+			for (ProductDTO product : productList) {
 				productBill = productBill + " Id: " + product.getProductId() + " Name: " + product.getProductName()
 						+ " Qty: " + product.getProductQty() + " Price: " + product.getProductPrice() + '\n';
 			}
@@ -386,23 +388,7 @@ public class UserServiceImpl implements UserService {
 		} else {
 			throw new UserSignInRequiredException("Please sign-in to View the Bill Invoice");
 		}
-		
-		//+++++++++++++++++++++++++++++++++++++++
-		CartBillDTO cartBillDTO = new CartBillDTO();
-		if (userSignInVerification()) 
-		{
-			
-		} 
-		else 
-		{
-			throw new UserSignInRequiredException("Please sign-in to View the Bill Invoice");
-		}
-		
 		return bill;
-		
 	}
-	
-	
-	
 
 }
